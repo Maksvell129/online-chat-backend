@@ -20,14 +20,16 @@
             + roomName
             + '/'
         );
-
+        chatSocket.onopen = function (e) {
+            console.log('open')
+        }
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
+            console.log(`message: ${data.message}`)
             document.querySelector('#chat-log').value += (data.message + '\n');
         };
-
         chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
+            console.log('close')
         };
 
         document.querySelector('#chat-message-input').focus();
