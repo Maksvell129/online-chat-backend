@@ -14,7 +14,7 @@ class JWTAuthMiddleware:
         headers = dict(scope['headers'])
         if b'authorization' in headers:
             try:
-                user = get_user(headers[b'authorization'].decode())
+                user = await get_user(headers[b'authorization'].decode())
                 scope['user'] = user
             except KeyError:
                 pass
