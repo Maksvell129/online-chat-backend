@@ -21,7 +21,7 @@
             + '/'
         );
         chatSocket.onopen = function (e) {
-            console.log('open')
+            console.log('opened')
         }
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
@@ -29,7 +29,8 @@
             document.querySelector('#chat-log').value += (data.message + '\n');
         };
         chatSocket.onclose = function(e) {
-            console.log('close')
+
+            console.log('closed.', 'Close code:', e.code)
         };
 
         document.querySelector('#chat-message-input').focus();
