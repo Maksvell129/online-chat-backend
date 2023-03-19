@@ -1,7 +1,9 @@
 from json import loads, dumps
 from json.decoder import JSONDecodeError
 
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+from chat.services import MessageService
 from django.contrib.auth.models import User
 
 
@@ -29,6 +31,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             message = text_data_json["message"]
         except JSONDecodeError:
             message = text_data
+
+        await database_sync_to_async(MessageService.save_message)(message, self.user)
 
         # Send message to room group
         await self.channel_layer.group_send(
