@@ -34,8 +34,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await database_sync_to_async(MessageService.save_message)(message, self.user)
 
-        await database_sync_to_async(MessageService.save_message)(message, self.scope['user'])
-
         # Send message to room group
         await self.channel_layer.group_send(
             self.room_group_name, {"type": "chat_message", "message": message}
