@@ -3,6 +3,7 @@ from json.decoder import JSONDecodeError
 
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+from django.contrib.auth.models import User
 from chat.services import MessageService
 from django.contrib.auth.models import User
 
