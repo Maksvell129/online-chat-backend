@@ -29,11 +29,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             },
         )
 
-        await self.channel_layer.group_send(
-            self.room_group_name,
+        messages = await database_sync_to_async(MessageService.get_all_messages_serialized)()
+
+        await self.send(text_data=dumps(
             {
                 "type": "message_history",
-            },
+                "messages": messages,
+            })
         )
 
     async def disconnect(self, close_code):
@@ -91,13 +93,3 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "type": "user_leave",
             "username": username
         }))
-
-    async def message_history(self, event):
-        messages = await database_sync_to_async(MessageService.get_all_messages_serialized)()
-
-        await self.send(text_data=dumps(
-            {
-                "type": "message_history",
-                "messages": messages,
-            })
-        )
