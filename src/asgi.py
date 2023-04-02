@@ -1,7 +1,6 @@
 import os
 
-
-from accounts.middlewares import JWTAuthMiddleware
+from accounts.middlewares import JWTAuthMiddleware, QueryParamsMiddleware
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from channels.security.websocket import OriginValidator
@@ -18,9 +17,10 @@ application = ProtocolTypeRouter(
     {
         "http": django_asgi_app,
         "websocket": OriginValidator(
-            JWTAuthMiddleware(
-                URLRouter(websocket_urlpatterns)
-            ),
+            QueryParamsMiddleware(
+                JWTAuthMiddleware(
+                    URLRouter(websocket_urlpatterns)
+                )),
             ['*']
         )
     }
