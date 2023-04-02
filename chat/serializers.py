@@ -8,7 +8,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ('id', 'content', 'created_at', 'author_username')
+        fields = ('id', 'content', 'created_at', 'author', 'author_username')
 
     def get_author_username(self, obj):
         return obj.author.username
