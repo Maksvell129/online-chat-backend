@@ -10,8 +10,7 @@ from django.contrib.auth.models import User
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.user: User = self.scope['user']
-        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        self.room_group_name = "chat_%s" % self.room_name
+        self.room_group_name = "chat"
 
         await self.accept()
         if not self.user.is_anonymous:
