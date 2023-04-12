@@ -1,5 +1,3 @@
-import re
-
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -21,6 +19,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
 
     class Meta:
@@ -29,8 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def validate_email(self, value):
-        if not re.match(r"/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", value):
-            raise serializers.ValidationError('Please enter a valid email address.')
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError('This email is already in use.')
         return value
