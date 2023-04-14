@@ -1,3 +1,4 @@
+import json
 from json import loads, dumps
 from json.decoder import JSONDecodeError
 
@@ -120,6 +121,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=dumps({
             "type": "online_info",
             "users_oline": sorted(self.users_online.keys()),
+        }))
+
+    async def message_updated(self, event):
+        message = event['message']
+        await self.send(text_data=json.dumps({
+            'type': 'message_updated',
+            'message': message,
+        }))
+
+    async def message_deleted(self, event):
+        message_id = event['message_id']
+        await self.send(text_data=json.dumps({
+            'type': 'message_deleted',
+            'message_id': message_id,
         }))
 
     async def add_user_to_online_users(self):
