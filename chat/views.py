@@ -27,6 +27,10 @@ class MessageViewSet(viewsets.ModelViewSet):
         # Call the parent perform_update method to update the message
         super().perform_update(serializer)
 
+        message = serializer.instance
+        message.is_modified = True
+        message.save()
+
         # Send a WebSocket message to notify clients of the update
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
