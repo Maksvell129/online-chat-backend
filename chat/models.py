@@ -9,6 +9,7 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="messages")
+    is_modified = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.author.username} at {self.created_at}"
