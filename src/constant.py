@@ -1,1 +1,2 @@
 MIN_PASSWORD_LENGTH = 6
+CHAT_NAME = "chat"

@@ -3,6 +3,8 @@ from channels.layers import get_channel_layer
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+
+from src.constant import CHAT_NAME
 from .models import Message
 from .permissions import IsMessageAuthor
 from .serializers import MessageSerializer
@@ -28,7 +30,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         # Send a WebSocket message to notify clients of the update
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "chat",
+            CHAT_NAME,
             {
                 'type': 'message_updated',
                 'message': serializer.data,
@@ -45,7 +47,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         # Send a WebSocket message to notify clients of the deletion
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "chat",
+            CHAT_NAME,
             {
                 'type': 'message_deleted',
                 'message_id': message_id,

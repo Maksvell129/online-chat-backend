@@ -9,6 +9,8 @@ from chat.serializers import MessageSerializer
 from chat.services import MessageService
 from django.contrib.auth.models import User
 
+from src.constant import CHAT_NAME
+
 
 class ChatConsumer(AsyncWebsocketConsumer):
     # Dict for storing usernames of users who are online
@@ -16,7 +18,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
         self.user: User = self.scope['user']
-        self.room_group_name = "chat"
+        self.room_group_name = CHAT_NAME
 
         await self.accept()
         if self.user.is_anonymous:
