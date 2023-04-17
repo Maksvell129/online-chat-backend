@@ -101,6 +101,10 @@ which is built with React and integrates with the server using the provided API.
     ```bash
     docker-compose down
     ```
+* Create superuser
+   ```bash
+   docker-compose run web python manage.py createsuperuser
+   ```
 
 # About the Project
 
