@@ -5,6 +5,9 @@ User = get_user_model()
 
 
 class Message(models.Model):
+    """
+    A model that represents a message.
+    """
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
@@ -12,4 +15,7 @@ class Message(models.Model):
     is_modified = models.BooleanField(default=False)
 
     def __str__(self):
+        """
+        Returns a string representation of the Message instance.
+        """
         return f"{self.author.username} at {self.created_at}"

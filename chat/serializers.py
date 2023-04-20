@@ -4,6 +4,10 @@ from .models import Message
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    """
+    A serializer that defines how Message objects should be converted to and from
+    JSON format.
+    """
     author_username = serializers.SerializerMethodField()
 
     class Meta:
