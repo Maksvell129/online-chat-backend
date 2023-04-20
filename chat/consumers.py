@@ -1,6 +1,5 @@
 import json
-from json import loads, dumps
-from json.decoder import JSONDecodeError
+from json import dumps
 
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -82,11 +81,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive(self, text_data):
-        try:
-            text_data_json = loads(text_data)
-            message = text_data_json["message"]
-        except JSONDecodeError:
-            message = text_data
+        # try:
+        #     text_data_json = loads(text_data)
+        #     message = text_data_json["message"]
+        # except JSONDecodeError:
+        message = text_data
 
         message = await database_sync_to_async(MessageService.save_message)(message, self.user)
         serialized_message = MessageSerializer(message).data
