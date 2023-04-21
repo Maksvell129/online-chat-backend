@@ -5,9 +5,8 @@ from urllib.parse import parse_qs
 
 
 class QueryParamsMiddleware:
-    """
-    A middleware that extracts query parameters from the request and adds them to the scope.
-    """
+    def __init__(self, inner):
+        self.inner = inner
 
     async def __call__(self, scope, receive, send):
         """
@@ -19,9 +18,9 @@ class QueryParamsMiddleware:
 
 
 class JWTAuthMiddleware:
-    """
-    A middleware that authenticates requests using JWT access tokens.
-    """
+
+    def __init__(self, inner):
+        self.inner = inner
 
     async def __call__(self, scope, receive, send):
         """
