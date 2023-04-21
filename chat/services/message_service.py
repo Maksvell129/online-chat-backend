@@ -23,9 +23,15 @@ class MessageService:
 
     @staticmethod
     def get_all_messages() -> QuerySet[Message]:
+        """
+        Return all messages
+        """
         return Message.objects.all()
 
     @staticmethod
     def get_all_messages_serialized() -> List[Dict]:
+        """
+        Return all messages serialized
+        """
         messages = MessageService.get_all_messages()
         return MessageSerializer(messages, many=True).data

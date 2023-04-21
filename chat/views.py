@@ -19,6 +19,9 @@ def room(request, room_name):
 
 
 class MessageViewSet(viewsets.ModelViewSet):
+    """
+    A viewset that provides CRUD operations for the Message model.
+    """
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated, IsMessageAuthor]
