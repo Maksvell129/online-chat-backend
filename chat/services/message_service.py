@@ -26,7 +26,7 @@ class MessageService:
         """
         Return all messages
         """
-        return Message.objects.all()
+        return Message.objects.order_by('created_at')
 
     @staticmethod
     def get_all_messages_serialized() -> List[Dict]:
