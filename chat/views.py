@@ -22,7 +22,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     """
     A viewset that provides CRUD operations for the Message model.
     """
-    queryset = Message.objects.all()
+    queryset = Message.objects.order_by('created_at')
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated, IsMessageAuthor]
 
@@ -43,7 +43,6 @@ class MessageViewSet(viewsets.ModelViewSet):
                 'message': serializer.data,
             }
         )
-
     def perform_destroy(self, instance):
         # Get the message ID before it's deleted
         message_id = instance.id
