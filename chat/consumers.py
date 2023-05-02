@@ -151,7 +151,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         """
         await self.send(text_data=dumps({
             "type": "online_info",
-            "users_oline": sorted(self.users_online.keys()),
+            "users_online": sorted(self.users_online.keys()),
         }))
 
     async def message_updated(self, event):
