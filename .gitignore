@@ -131,3 +131,9 @@ dmypy.json
 # IDE
 .idea/
 .vscode/
+
+# Redis
+dump.rdb
+
+# Docker storages
+storage
